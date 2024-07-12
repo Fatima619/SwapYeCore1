@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SwapYeCore1.Models.Payment>
+@using Microsoft.AspNetCore.Http
+@using PagedList.Core;
+@using PagedList.Core.Mvc;
+@inject IHttpContextAccessor HttpContextAccessor
+@*@model IPagedList<SwapYeCore1.Models.Item>*@
+
+@{
+    ViewData["Title"] = "pagepay";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@{
+    var UserId = HttpContextAccessor?.HttpContext?.Session.GetInt32("_UserId");
+}
+<style>
+    .pagination {
+        justify-content: center !important;
+    }
+</style>
+
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<table border="3" class="table bable-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.File)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApprovalState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    <img class="rounded" src="@Url.Content(@item.File)" alt="somthing" width="50%" height="150" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApprovalState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item.Description_1)
+            </td>
+           @* <td>
+                <a asp-action="Edit" asp-route-id="@item.PaymentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PaymentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PaymentId">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
+<br />
+<h5>The count of payment is: @ViewBag.Num</h5>
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 m2">
+        <pager class="pager-container"
+               list="@((IPagedList)Model)"
+               options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
+    </div>
+</div>
+

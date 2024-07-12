@@ -1,0 +1,168 @@
+﻿@model IEnumerable<SwapYeCore1.Models.Item>
+@*@model SwapYeCore1.Models.Item*@
+
+
+@using Microsoft.AspNetCore.Http
+@using PagedList.Core;
+@using PagedList.Core.Mvc;
+@inject IHttpContextAccessor HttpContextAccessor
+@*@model IPagedList<SwapYeCore1.Models.Item>*@
+
+@{
+    ViewData["Title"] = "page2";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+@{
+    var UserId = HttpContextAccessor?.HttpContext?.Session.GetInt32("_UserId");
+}
+<style>
+    .pagination {
+        justify-content: center !important;
+    }
+</style>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<table border="3" class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transaction_type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item_State)
+            </th>
+            <th>
+                
+                Description
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <td>
+                    <img class="rounded" src="@Url.Content(@item.Image_1)" alt="somthing" width="50%" height="150" />
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transaction_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Item_State)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Description_1)
+                    
+                   
+            </td>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemType.TypeNme)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="@item.ItemID" />
+                     
+                       @* <input type="submit" id="saveAjax" value="DELETAjax" class="btn btn-primary" />|*@
+                        
+                    </form>
+                    @Html.ActionLink("DELET", "Delete", new { id = item.ItemID },new { @Style = "color:#fff;text-decoration:none;" })
+       
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<br />
+<br />
+<h5>The count of Items is: @ViewBag.Num</h5>
+<br />
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 m2">
+        <pager class="pager-container"
+               list="@((IPagedList)Model)"
+               options="@PagedListRenderOptions.Bootstrap4PageNumbersOnly" />
+    </div>
+</div>
+
+
+@*<script lang="ja" type="text/javascript">
+
+    $("#saveAjax").click(function deleteData1() {
+        var id =@Model;
+        $.ajax({
+            url: 'http://localhost:32359/api/admenAPI/' + id,
+            type: 'DELETE',
+            success: function (data) {
+            },
+            error: function (data) {
+                alert('Problem in deleting ITEM:' + data.responseText);
+            }
+        });
+    }
+    )
+</Script>*@
+
+@*<script>
+    $(document).on('click', 'page2', function () {
+        var id =  var id = $(this).data('item.ItemID');
+        $.ajax({
+            url: '/api/admenAPI/' + id,
+            type: 'DELETE',
+            dataType:'json'
+            success: function () {
+               
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+</script>*@
